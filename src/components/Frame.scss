@@ -1,0 +1,8 @@
+.frame__container {
+  background: #fff;
+  border: black 1px solid;
+
+  & > canvas {
+    background-color: #fff;
+  }
+}

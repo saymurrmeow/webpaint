@@ -1,0 +1,94 @@
+.tool {
+  &__container {
+    border-top: 2px inset rgba(225, 225, 225, 0.5);
+    border-left: 2px inset rgba(0, 0, 0, 0.5);
+    border-bottom: 2px inset rgba(0, 0, 0, 0.5);
+    border-right: 2px inset rgba(225, 225, 225, 0.5);
+
+    &--active {
+      border: 2px inset;
+      border-top: 2px inset rgba(0, 0, 0, 0.8);
+      border-left: 2px inset rgba(0, 0, 0, 0.8);
+    }
+
+    & > button {
+      border: none;
+      box-sizing: border-box;
+      width: 1.4rem;
+      height: 1.4rem;
+      cursor: pointer;
+    }
+  }
+
+  &_icon {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 0 auto;
+    background: url('../../images/tools.png');
+    background-repeat: no-repeat;
+
+    &_select_star {
+    }
+
+    &__select_rectangle {
+      background-position: -15px 0;
+    }
+
+    &__eraser {
+      background-position: -31px 0;
+    }
+
+    &__pouring {
+      background-position: -48px 0;
+    }
+
+    &__pipette {
+      background-position: -64px 0;
+    }
+
+    &__magnifier {
+      background-position: -80px 0;
+    }
+
+    &__pen {
+      background-position: -95px 0;
+    }
+
+    &__brush {
+      background-position: -111px 0;
+    }
+
+    &__spray {
+      background-position: -128px 0;
+    }
+
+    &__text {
+      background-position: -144px 0;
+    }
+
+    &__line {
+      background-position: -159px 0;
+    }
+
+    &__curve {
+      background-position: -175px 0;
+    }
+
+    &__rectangle {
+      background-position: -191px 0;
+    }
+
+    &__crooked {
+      background-position: -207px 0;
+    }
+
+    &__elipse {
+      background-position: -224px 0;
+    }
+
+    &__rounded_rectangle {
+      background-position: -240px 0;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "lib": ["es2020", "DOM"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "esModuleInterop": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "preserveSymlinks": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "esnext",
+    "importHelpers": true,
+    "baseUrl": ".",
+    "paths": {
+      "react": ["node_modules/@types/react/index.d.ts"],
+      "jest": ["node_modules/@types/jest/index.d.ts"]
+    },
+    "typeRoots": ["types"],
+    "types": ["react"]
+  },
+  "exclude": ["testing", "node_modules", "scripts"]
+}

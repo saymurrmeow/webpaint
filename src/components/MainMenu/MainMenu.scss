@@ -1,0 +1,11 @@
+.menu {
+  &__container {
+    display: flex;
+    gap: 1rem;
+    margin-left: 0.2rem;
+  }
+
+  &__element {
+    list-style-type: none;
+  }
+}
