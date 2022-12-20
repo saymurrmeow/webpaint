@@ -59,6 +59,25 @@ const createMouse = (canvas) => {
   return mouse;
 };
 
+class Line {
+  private dx = 0;
+  private dy = 0;
+
+  constructor(private ctx: CanvasRenderingContext2D, private x: number, private y: number) { }
+
+  update(dx: number, dy: number) {
+    this.dx = dx;
+    this.dy = dy;
+  }
+
+  draw() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.x, this.y);
+    this.ctx.lineTo(this.dx, this.dy);
+    this.ctx.stroke();
+  }
+}
+
 export const Frame = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef();
@@ -66,19 +85,27 @@ export const Frame = () => {
   const draw = () => {
     requestAnimationFrame(tick);
 
+    const state = {
+      items: [],
+    };
+
     function tick() {
       requestAnimationFrame(tick);
-
-      const ctx = canvasRef.current?.getContext('2d');
-
+      const ctx = canvasRef.current!.getContext('2d')!;
       const mouse = mouseRef.current;
-      mouse.tick();
+      ctx.save();
       ctx?.clearRect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
+      const line = new Line(ctx, mouse.startX, mouse.startY);
       if (mouse.left) {
-        ctx?.beginPath();
-        ctx?.moveTo(mouse.startX, mouse.startY);
-        ctx?.lineTo(mouse.x, mouse.y);
-        ctx?.stroke();
+        mouse.tick();
+        ctx?.restore();
+        line.update(mouse.x, mouse.y);
+        line.draw();
+        state.items.push(line);
+      }
+
+      for (const item of state.items) {
+        item.draw();
       }
     }
   };
