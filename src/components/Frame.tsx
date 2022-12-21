@@ -45,9 +45,10 @@ class Cursor {
   }
 
   handleMouseMove(e: MouseEvent) {
+    const { left, top } = this.canvasInstance.getBoundingClientRect();
     const { clientX, clientY } = e;
-    this.x = clientX;
-    this.y = clientY;
+    this.x = clientX - left;
+    this.y = clientY - top;
     if (this.left) {
       this.activeTool.update(this.x, this.y);
       this.activeTool.draw(this.canvasInstance.getContext('2d'));
