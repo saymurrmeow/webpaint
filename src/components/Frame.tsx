@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useEffect, useRef } from 'react';
 
 import './Frame.scss';
 
@@ -29,48 +29,16 @@ class Line {
   }
 }
 
-const items = [];
-
-class Cursor {
-  private x = 0;
-  private y = 0;
-  private left = false;
-
-  private activeTool!: Line;
-
-  constructor(private canvasInstance: HTMLCanvasElement) {
-    canvasInstance.addEventListener('mousemove', this.handleMouseMove.bind(this));
-    canvasInstance.addEventListener('mousedown', this.handleMouseDown.bind(this));
-    canvasInstance.addEventListener('mouseup', this.handleMouseUp.bind(this));
-  }
-
-  handleMouseMove(e: MouseEvent) {
-    const { left, top } = this.canvasInstance.getBoundingClientRect();
-    const { clientX, clientY } = e;
-    this.x = clientX - left;
-    this.y = clientY - top;
-    if (this.left) {
-      const ctx = this.canvasInstance.getContext('2d');
-      ctx?.clearRect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
-      this.activeTool.update(this.x, this.y);
-      this.activeTool.draw(this.canvasInstance.getContext('2d'));
-    }
-  }
-
-  handleMouseDown() {
-    this.left = true;
-    this.activeTool = new Line();
-    this.activeTool.onDrawStart(this.x, this.y);
-  }
-
-  handleMouseUp() {
-    this.left = false;
-    items.push(this.activeTool);
-  }
-}
+const items: Line[] = [];
 
 export const Frame = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  let line: Line;
+  const mouse = {
+    x: 0,
+    y: 0,
+    left: false,
+  };
 
   const render = () => {
     requestAnimationFrame(tick);
@@ -79,15 +47,44 @@ export const Frame = () => {
       requestAnimationFrame(tick);
 
       const ctx = canvasRef.current!.getContext('2d')!;
+      ctx.clearRect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
+
+      if (mouse.left) {
+        line.update(mouse.x, mouse.y);
+        line.draw(ctx);
+      }
 
       for (const item of items) {
         item.draw(ctx);
       }
     }
   };
+
+  const mouseUpHandler = (e: MouseEvent) => {
+    items.push(line);
+    mouse.left = false;
+  };
+
+  const mouseDownHandler = (e: MouseEvent) => {
+    mouse.left = true;
+    line = new Line();
+    line.onDrawStart(mouse.x, mouse.y);
+  };
+
+  const mouseMoveHandler = (e: MouseEvent) => {
+    const { left, top } = canvasRef.current!.getBoundingClientRect();
+    const { clientX, clientY } = e;
+    mouse.x = clientX - left;
+    mouse.y = clientY - top;
+  };
+
   useEffect(() => {
     render();
-    const cursor = new Cursor(canvasRef.current);
+
+    const canvas = canvasRef.current;
+    canvas?.addEventListener('mouseup', mouseUpHandler);
+    canvas?.addEventListener('mousedown', mouseDownHandler);
+    canvas?.addEventListener('mousemove', mouseMoveHandler);
   }, []);
 
   return (
