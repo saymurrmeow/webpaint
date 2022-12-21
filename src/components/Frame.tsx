@@ -50,6 +50,8 @@ class Cursor {
     this.x = clientX - left;
     this.y = clientY - top;
     if (this.left) {
+      const ctx = this.canvasInstance.getContext('2d');
+      ctx?.clearRect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
       this.activeTool.update(this.x, this.y);
       this.activeTool.draw(this.canvasInstance.getContext('2d'));
     }
@@ -77,7 +79,6 @@ export const Frame = () => {
       requestAnimationFrame(tick);
 
       const ctx = canvasRef.current!.getContext('2d')!;
-      ctx?.clearRect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
 
       for (const item of items) {
         item.draw(ctx);
