@@ -1,4 +1,5 @@
-export const enum ModeName {
+export const enum ToolName {
+  Pencil,
   Line,
 }
 

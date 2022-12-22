@@ -1,12 +1,30 @@
 import Cursor from './Cursor';
-import { Tool } from './Tool';
+import { Tool, ToolName } from './Tool';
 import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT } from '../constaints';
 
 import Line from './Line';
+import Pencil from './Pencil';
 
+type ToolConfig = {
+  name: ToolName;
+  ctx: CanvasRenderingContext2D;
+  cursor: Cursor;
+};
+
+// TODO refactor
+const toolFactory = ({ name, ctx, cursor }: ToolConfig) => {
+  switch (name) {
+    case ToolName.Line:
+      return new Line(ctx, cursor);
+    case ToolName.Pencil:
+      return new Pencil(ctx, cursor);
+  }
+};
+
+//TODO refactor
 class Renderer {
   private cursor: Cursor;
-  private activeTool!: Tool;
+  private activeToolName: ToolName = ToolName.Line;
   private items: Tool[] = [];
 
   constructor(private canvasInstance: HTMLCanvasElement) {
@@ -18,17 +36,26 @@ class Renderer {
     ctx?.clearRect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
   }
 
+  private initTool() {
+    return toolFactory({
+      name: this.activeToolName,
+      ctx: this.canvasInstance.getContext('2d'),
+      cursor: this.cursor,
+    });
+  }
+
   private update() {
-    this.activeTool = new Line(this.canvasInstance.getContext('2d'), this.cursor);
+    const tool = this.initTool();
     const mouse = this.cursor.getMouse();
     if (mouse.left) {
-      this.activeTool.update();
-      this.activeTool.draw();
+      tool.update();
+      tool.draw();
     }
 
     if (mouse.prevLeft && !mouse.left) {
-      this.activeTool.update();
-      this.items.push(this.activeTool);
+      const tool = this.initTool();
+      tool.update();
+      this.items.push(tool);
     }
 
     this.cursor.tick();
