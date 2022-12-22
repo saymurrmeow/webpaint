@@ -1,7 +1,4 @@
-import { Tool } from './Mode';
-
 class Cursor {
-  private activeTool: Tool;
   private mouse = {
     x: 0,
     y: 0,
@@ -12,22 +9,21 @@ class Cursor {
   };
   // TODO how bind canvas intead pass in constructor
   constructor(private canvasInstance: HTMLCanvasElement) {
-    // TODO typing
     canvasInstance.addEventListener('mouseup', this.mouseUpHandler);
     canvasInstance.addEventListener('mousedown', this.mouseDownHandler);
     canvasInstance.addEventListener('mousemove', this.mouseMoveHandler);
   }
 
-  mouseUpHandler = () => {
+  private mouseUpHandler = () => {
     this.mouse.left = false;
   };
 
-  mouseDownHandler = () => {
+  private mouseDownHandler = () => {
     this.mouse.left = true;
     Object.assign(this.mouse, { startX: this.mouse.x, startY: this.mouse.y });
   };
 
-  mouseMoveHandler = (e: MouseEvent) => {
+  private mouseMoveHandler = (e: MouseEvent) => {
     const { left, top } = this.canvasInstance.getBoundingClientRect();
     const { clientX, clientY } = e;
     Object.assign(this.mouse, { x: clientX - left, y: clientY - top });

@@ -1,7 +1,7 @@
 import Cursor from './Cursor';
-import { Mode } from './Mode';
+import { Tool } from './Tool';
 
-class Line implements Mode {
+class Line implements Tool {
   x = 0;
   y = 0;
   dx = 0;
