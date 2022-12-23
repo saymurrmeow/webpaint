@@ -24,7 +24,7 @@ const toolFactory = ({ name, ctx, cursor }: ToolConfig) => {
 //TODO refactor
 class Renderer {
   private cursor: Cursor;
-  private activeToolName: ToolName = ToolName.Line;
+  private activeToolName: ToolName = ToolName.Pencil;
   private items: Tool[] = [];
 
   constructor(private canvasInstance: HTMLCanvasElement) {
@@ -53,7 +53,6 @@ class Renderer {
     }
 
     if (mouse.prevLeft && !mouse.left) {
-      const tool = this.initTool();
       tool.update();
       this.items.push(tool);
     }
@@ -62,6 +61,7 @@ class Renderer {
   }
 
   private render() {
+    console.log(this.items);
     for (const item of this.items) {
       item.draw();
     }
