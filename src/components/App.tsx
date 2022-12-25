@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Frame } from './Frame';
+import Frame from './Frame';
 import { MainMenu } from './MainMenu';
 import './App.scss';
 import { Toolbar } from './Toolbar';

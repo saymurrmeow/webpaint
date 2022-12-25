@@ -18,6 +18,23 @@ class Renderer {
     this.cursor = new Cursor(canvasInstance);
   }
 
+  setActiveTool(name: string) {
+    switch (name) {
+      case 'pen':
+        this.activeTool = Pencil;
+        return;
+      case 'line':
+        this.activeTool = Line;
+        return;
+      case 'rectangle':
+        this.activeTool = Rectangle;
+        return;
+      case 'ellipse':
+        this.activeTool = Elipse;
+        return;
+    }
+  }
+
   private clear() {
     const ctx = this.canvasInstance.getContext('2d');
     ctx?.clearRect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);

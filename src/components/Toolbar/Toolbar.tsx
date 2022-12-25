@@ -18,7 +18,7 @@ const tools = [
   { name: 'curve' },
   { name: 'rectangle' },
   { name: 'crooked' },
-  { name: 'elipse' },
+  { name: 'ellipse' },
   { name: 'rounded_rectangle' },
 ];
 
