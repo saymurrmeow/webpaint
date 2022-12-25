@@ -1,17 +1,17 @@
 import Cursor from './Cursor';
-import { Tool } from './Tool';
+import { Figure } from './Figure';
 import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT } from '../constaints';
 
 import Line from './Line';
 import Pencil from './Pencil';
 import Rectangle from './Rectangle';
-import Circle from './Circle';
+import Elipse from './Elipse';
 
 //TODO refactor
 class Renderer {
   private cursor: Cursor;
-  private activeTool = Circle;
-  private items: Tool[] = [];
+  private activeTool = Elipse;
+  private items: Figure[] = [];
   private figure = null;
 
   constructor(private canvasInstance: HTMLCanvasElement) {
@@ -26,6 +26,7 @@ class Renderer {
   private update() {
     const mouse = this.cursor.getMouse();
     if (mouse.left) {
+      // TODO the worst thing in life
       if (!this.figure) {
         this.figure = new this.activeTool(this.canvasInstance.getContext('2d'), this.cursor);
       }

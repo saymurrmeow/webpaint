@@ -2,7 +2,7 @@ import { Figure } from './Figure';
 import Cursor from './Cursor';
 import Point from './Point';
 
-class Circle implements Figure {
+class Elipse implements Figure {
   private point: Point = new Point(0, 0);
   private dPoint: Point = new Point(0, 0);
 
@@ -17,11 +17,18 @@ class Circle implements Figure {
   }
 
   draw() {
-    const center = this.point.getCordinates();
-    const radius = this.point.distance(this.dPoint);
+    const { x, y } = this.point.getCordinates();
+    const { x: dx, y: dy } = this.dPoint.getCordinates();
+    this.ctx.save();
     this.ctx.beginPath();
-    this.ctx.arc(center.x, center.y, radius, 0, Math.PI * 2);
+    const scaleX = 1 * ((x - dx) / 2);
+    const scaleY = 1 * ((y - dy) / 2);
+    this.ctx.scale(scaleX, scaleY);
+    const centerX = dx / scaleX + 1;
+    const centerY = dy / scaleY + 1;
+    this.ctx.arc(centerX, centerY, 1, 0, Math.PI * 2);
+    this.ctx.restore();
     this.ctx.stroke();
   }
 }
-export default Circle;
+export default Elipse;
