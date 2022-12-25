@@ -18,8 +18,7 @@ class Line implements Figure {
 
   draw() {
     const { x, y } = this.point.getCordinates();
-    const dx = this.dPoint.getCordinates().x;
-    const dy = this.dPoint.getCordinates().y;
+    const { x: dx, y: dy } = this.dPoint.getCordinates();
     this.ctx.beginPath();
     this.ctx.moveTo(x, y);
     this.ctx.lineTo(dx, dy);

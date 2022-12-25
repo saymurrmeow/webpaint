@@ -17,14 +17,10 @@ class Rectangle implements Figure {
   }
 
   draw() {
-    const diagonal = this.dPoint.subtact(this.point);
+    const { x: diagX, y: diagY } = this.dPoint.subtact(this.point).getCordinates();
+    const { x, y } = this.point.getCordinates();
     this.ctx.beginPath();
-    this.ctx.rect(
-      this.point.getCordinates().x,
-      this.point.getCordinates().y,
-      diagonal.getCordinates().x,
-      diagonal.getCordinates().y,
-    );
+    this.ctx.rect(x, y, diagX, diagY);
     this.ctx.stroke();
   }
 }
