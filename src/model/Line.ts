@@ -1,28 +1,28 @@
 import Cursor from './Cursor';
-import { Tool } from './Tool';
+import { Figure } from './Figure';
+import Point from './Point';
 
-class Line implements Tool {
-  x = 0;
-  y = 0;
-  dx = 0;
-  dy = 0;
+class Line implements Figure {
+  private point = new Point(0, 0);
+  private dPoint = new Point(0, 0);
 
   constructor(private ctx: CanvasRenderingContext2D, private cursor: Cursor) {
     const { startX, startY } = cursor.getMouse();
-    this.x = startX;
-    this.y = startY;
+    this.point.updateCordinates(startX, startY);
   }
 
   update() {
     const { x, y } = this.cursor.getMouse();
-    this.dx = x;
-    this.dy = y;
+    this.dPoint.updateCordinates(x, y);
   }
 
   draw() {
+    const { x, y } = this.point.getCordinates();
+    const dx = this.dPoint.getCordinates().x;
+    const dy = this.dPoint.getCordinates().y;
     this.ctx.beginPath();
-    this.ctx.moveTo(this.x, this.y);
-    this.ctx.lineTo(this.dx, this.dy);
+    this.ctx.moveTo(x, y);
+    this.ctx.lineTo(dx, dy);
     this.ctx.stroke();
   }
 }

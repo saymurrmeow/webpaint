@@ -1,25 +1,22 @@
 import Cursor from './Cursor';
-import { Tool } from './Tool';
+import { Figure } from './Figure';
+import Point from './Point';
 
-type Point = {
-  x: number;
-  y: number;
-};
-
-const points: Point[] = [];
-
-class Pencil implements Tool {
+class Pencil implements Figure {
+  private points: Point[] = [];
   constructor(private ctx: CanvasRenderingContext2D, private cursor: Cursor) { }
 
   update(): void {
     const { x, y } = this.cursor.getMouse();
-    points.push({ x, y });
+    const point = new Point(x, y);
+    this.points.push(point);
   }
 
   draw(): void {
     this.ctx.beginPath();
-    for (const point of points) {
-      this.ctx.lineTo(point.x, point.y);
+    for (const point of this.points) {
+      const { x, y } = point.getCordinates();
+      this.ctx.lineTo(x, y);
     }
     this.ctx.stroke();
   }

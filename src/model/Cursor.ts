@@ -1,3 +1,4 @@
+// TODO refactor
 class Cursor {
   private mouse = {
     x: 0,
