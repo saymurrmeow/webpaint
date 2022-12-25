@@ -17,7 +17,6 @@ export const Frame: React.FC<Props> = (props) => {
   useEffect(() => {
     const canvas = canvasRef.current!;
     // TODO
-    console.log(props.activeTool);
     const renderer = new Renderer(canvas);
     rendererRef.current = renderer;
     renderer.tick();

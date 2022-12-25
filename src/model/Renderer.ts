@@ -32,6 +32,8 @@ class Renderer {
       case 'ellipse':
         this.activeTool = Ellipse;
         return;
+      default:
+        alert('NOT IMPLEMENTED!');
     }
   }
 
