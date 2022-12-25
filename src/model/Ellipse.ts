@@ -2,7 +2,7 @@ import { Figure } from './Figure';
 import Cursor from './Cursor';
 import Point from './Point';
 
-class Elipse implements Figure {
+class Ellipse implements Figure {
   private point: Point = new Point(0, 0);
   private dPoint: Point = new Point(0, 0);
 
@@ -31,4 +31,4 @@ class Elipse implements Figure {
     this.ctx.stroke();
   }
 }
-export default Elipse;
+export default Ellipse;

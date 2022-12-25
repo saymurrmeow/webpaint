@@ -5,12 +5,12 @@ import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT } from '../constaints';
 import Line from './Line';
 import Pencil from './Pencil';
 import Rectangle from './Rectangle';
-import Elipse from './Elipse';
+import Ellipse from './Ellipse';
 
 //TODO refactor
 class Renderer {
   private cursor: Cursor;
-  private activeTool = Elipse;
+  private activeTool = Ellipse;
   private items: Figure[] = [];
   private figure = null;
 
@@ -30,7 +30,7 @@ class Renderer {
         this.activeTool = Rectangle;
         return;
       case 'ellipse':
-        this.activeTool = Elipse;
+        this.activeTool = Ellipse;
         return;
     }
   }
