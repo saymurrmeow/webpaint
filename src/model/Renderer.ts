@@ -5,11 +5,12 @@ import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT } from '../constaints';
 import Line from './Line';
 import Pencil from './Pencil';
 import Rectangle from './Rectangle';
+import Circle from './Circle';
 
 //TODO refactor
 class Renderer {
   private cursor: Cursor;
-  private activeTool = Rectangle;
+  private activeTool = Circle;
   private items: Tool[] = [];
   private figure = null;
 
