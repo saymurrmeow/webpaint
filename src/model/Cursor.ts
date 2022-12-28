@@ -31,7 +31,10 @@ class Cursor {
   };
 
   getMouse() {
-    return this.mouse;
+    return Object.assign(this.mouse, {
+      isDown: this.mouse.left && !this.mouse.prevLeft,
+      isUp: this.mouse.prevLeft && !this.mouse.left,
+    });
   }
 
   tick() {

@@ -1,40 +1,23 @@
 import Cursor from './Cursor';
 import { Shape } from './Shape';
 import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT } from '../constaints';
-
-import Line from './Line';
-import Pencil from './Pencil';
-import Rectangle from './Rectangle';
-import Ellipse from './Ellipse';
+import ShapeFactory, { ShapeType } from './ShapeFactory';
 
 //TODO refactor
 class Renderer {
   private cursor: Cursor;
-  private activeTool = Ellipse;
-  private items: Shape[] = [];
-  private figure = null;
+  private factory: ShapeFactory = new ShapeFactory();
+  private shapes: Shape[] = [];
+  // not good actualy
+  private activeShape: Shape | null = null;
+  private activeShapeType: ShapeType = 'pen';
 
   constructor(private canvasInstance: HTMLCanvasElement) {
     this.cursor = new Cursor(canvasInstance);
   }
 
-  setActiveTool(name: string) {
-    switch (name) {
-      case 'pen':
-        this.activeTool = Pencil;
-        return;
-      case 'line':
-        this.activeTool = Line;
-        return;
-      case 'rectangle':
-        this.activeTool = Rectangle;
-        return;
-      case 'ellipse':
-        this.activeTool = Ellipse;
-        return;
-      default:
-        alert('NOT IMPLEMENTED!');
-    }
+  setActiveTool(type: ShapeType) {
+    this.activeShapeType = type;
   }
 
   private clear() {
@@ -45,27 +28,30 @@ class Renderer {
   private update() {
     const mouse = this.cursor.getMouse();
 
-    if (mouse.left && !mouse.prevLeft) {
-      // TODO the worst thing in life
-      if (!this.figure) {
-        this.figure = new this.activeTool(this.canvasInstance.getContext('2d'), this.cursor);
-      }
-      this.items.push(this.figure);
+    if (mouse.isDown && !this.activeShape) {
+      const ctx = this.canvasInstance.getContext('2d') as CanvasRenderingContext2D;
+      this.activeShape = this.factory.create({
+        type: this.activeShapeType,
+        cursor: this.cursor,
+        ctx,
+      });
+      this.shapes.push(this.activeShape);
     }
 
     if (mouse.left) {
-      this.figure.update();
+      const lastShape = this.shapes[this.shapes.length - 1];
+      lastShape.update();
     }
 
-    if (mouse.prevLeft && !mouse.left) {
-      this.figure = null;
+    if (mouse.isUp) {
+      this.activeShape = null;
     }
 
     this.cursor.tick();
   }
 
   private render() {
-    for (const item of this.items) {
+    for (const item of this.shapes) {
       item.draw();
     }
   }

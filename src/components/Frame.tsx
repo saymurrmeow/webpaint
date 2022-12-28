@@ -12,7 +12,7 @@ type Props = {
 
 export const Frame: React.FC<Props> = (props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rendererRef = useRef(null);
+  const rendererRef = useRef<Renderer>();
 
   useEffect(() => {
     const canvas = canvasRef.current!;
