@@ -1,8 +1,8 @@
 import Cursor from './Cursor';
-import { Figure } from './Figure';
+import { Shape } from './Shape';
 import Point from './Point';
 
-class Line implements Figure {
+class Line implements Shape {
   private point = new Point(0, 0);
   private dPoint = new Point(0, 0);
 

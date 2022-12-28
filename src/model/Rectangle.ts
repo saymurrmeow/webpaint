@@ -1,8 +1,8 @@
-import { Figure } from './Figure';
+import { Shape } from './Shape';
 import Cursor from './Cursor';
 import Point from './Point';
 
-class Rectangle implements Figure {
+class Rectangle implements Shape {
   private point: Point = new Point(0, 0);
   private dPoint: Point = new Point(0, 0);
 

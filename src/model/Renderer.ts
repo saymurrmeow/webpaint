@@ -1,5 +1,5 @@
 import Cursor from './Cursor';
-import { Figure } from './Figure';
+import { Shape } from './Shape';
 import { DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT } from '../constaints';
 
 import Line from './Line';
@@ -11,7 +11,7 @@ import Ellipse from './Ellipse';
 class Renderer {
   private cursor: Cursor;
   private activeTool = Ellipse;
-  private items: Figure[] = [];
+  private items: Shape[] = [];
   private figure = null;
 
   constructor(private canvasInstance: HTMLCanvasElement) {
@@ -44,18 +44,20 @@ class Renderer {
 
   private update() {
     const mouse = this.cursor.getMouse();
-    if (mouse.left) {
+
+    if (mouse.left && !mouse.prevLeft) {
       // TODO the worst thing in life
       if (!this.figure) {
         this.figure = new this.activeTool(this.canvasInstance.getContext('2d'), this.cursor);
       }
+      this.items.push(this.figure);
+    }
+
+    if (mouse.left) {
       this.figure.update();
-      this.figure.draw();
     }
 
     if (mouse.prevLeft && !mouse.left) {
-      this.figure.update();
-      this.items.push(this.figure);
       this.figure = null;
     }
 

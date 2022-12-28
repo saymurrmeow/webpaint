@@ -1,8 +1,8 @@
 import Cursor from './Cursor';
-import { Figure } from './Figure';
+import { Shape } from './Shape';
 import Point from './Point';
 
-class Pencil implements Figure {
+class Pencil implements Shape {
   private points: Point[] = [];
   constructor(private ctx: CanvasRenderingContext2D, private cursor: Cursor) { }
 
